@@ -11,7 +11,7 @@ const USERS = {
     'ישי': { password: '0326075868', role: 'admin' }
 };
 
-const DEFAULT_LOAN = 125000;
+const DEFAULT_LOAN = 120000;
 
 // =================== STATE ===================
 let currentUser = null;
@@ -399,6 +399,7 @@ loginForm.addEventListener('submit', e => {
 });
 
 logoutBtn.addEventListener('click', logout);
+$('refreshBtn').addEventListener('click', () => location.reload());
 addPaymentBtn.addEventListener('click', openAddPayment);
 
 // Date filter
