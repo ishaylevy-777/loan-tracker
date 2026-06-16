@@ -333,10 +333,22 @@ function viewImage(url) {
     openModal(imageModal);
 }
 
-function showToast(msg) {
-    toast.textContent = msg;
+let toastTimeout = null;
+
+function showToast(msg, undoCallback) {
+    clearTimeout(toastTimeout);
+    if (undoCallback) {
+        toast.innerHTML = `<span>${msg}</span><button class="toast-undo-btn" id="toastUndoBtn">ביטול</button>`;
+        $('toastUndoBtn').addEventListener('click', () => {
+            clearTimeout(toastTimeout);
+            toast.classList.add('hidden');
+            undoCallback();
+        });
+    } else {
+        toast.textContent = msg;
+    }
     toast.classList.remove('hidden');
-    setTimeout(() => toast.classList.add('hidden'), 3000);
+    toastTimeout = setTimeout(() => toast.classList.add('hidden'), undoCallback ? 6000 : 3000);
 }
 
 // =================== EVENT LISTENERS ===================
@@ -436,12 +448,18 @@ loanForm.addEventListener('submit', async e => {
     e.preventDefault();
     const amount = parseFloat($('addLoanAmount').value);
     if (amount > 0) {
+        const previousAmount = loanAmount;
         const newTotal = loanAmount + amount;
         await updateLoanAmount(newTotal);
         loanAmount = newTotal;
         updateStats();
         closeModal(loanModal);
-        showToast('₪' + amount.toLocaleString('he-IL') + ' נוספו להלוואה');
+        showToast('₪' + amount.toLocaleString('he-IL') + ' נוספו להלוואה', async () => {
+            await updateLoanAmount(previousAmount);
+            loanAmount = previousAmount;
+            updateStats();
+            showToast('ההוספה בוטלה');
+        });
     }
 });
 
