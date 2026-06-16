@@ -494,6 +494,69 @@ body {
     letter-spacing: -0.2px;
 }
 
+.date-filter {
+    margin-bottom: 14px;
+}
+
+.date-filter-row {
+    display: flex;
+    gap: 10px;
+}
+
+.date-filter-field {
+    flex: 1;
+}
+
+.date-filter-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.date-filter-field input[type="date"] {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--glass-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.date-filter-field input[type="date"]:focus {
+    border-color: var(--blue);
+}
+
+.btn-filter-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 6px 14px;
+    background: var(--red-soft);
+    color: var(--red);
+    border: none;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-filter-clear:active {
+    opacity: 0.7;
+}
+
+.btn-filter-clear.hidden {
+    display: none;
+}
+
 .payments-list {
     display: flex;
     flex-direction: column;

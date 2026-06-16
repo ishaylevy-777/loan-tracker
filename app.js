@@ -214,7 +214,27 @@ function updateStats() {
     }
 }
 
+function getFilteredPayments() {
+    const from = $('filterFrom').value;
+    const to = $('filterTo').value;
+    const clearBtn = $('filterClearBtn');
+
+    if (from || to) {
+        clearBtn.classList.remove('hidden');
+    } else {
+        clearBtn.classList.add('hidden');
+    }
+
+    return payments.filter(p => {
+        if (from && p.date < from) return false;
+        if (to && p.date > to) return false;
+        return true;
+    });
+}
+
 function renderPayments() {
+    const filtered = getFilteredPayments();
+
     if (payments.length === 0) {
         paymentsList.innerHTML = `
             <div class="empty-state">
@@ -227,7 +247,19 @@ function renderPayments() {
         return;
     }
 
-    paymentsList.innerHTML = payments.map(p => `
+    if (filtered.length === 0) {
+        paymentsList.innerHTML = `
+            <div class="empty-state">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="M21 21l-4.35-4.35"/>
+                </svg>
+                <p>לא נמצאו תשלומים בתאריכים שנבחרו</p>
+            </div>`;
+        return;
+    }
+
+    paymentsList.innerHTML = filtered.map(p => `
         <div class="payment-card" data-id="${p.id}">
             <div class="payment-top">
                 <div>
@@ -368,6 +400,15 @@ loginForm.addEventListener('submit', e => {
 
 logoutBtn.addEventListener('click', logout);
 addPaymentBtn.addEventListener('click', openAddPayment);
+
+// Date filter
+$('filterFrom').addEventListener('change', renderPayments);
+$('filterTo').addEventListener('change', renderPayments);
+$('filterClearBtn').addEventListener('click', () => {
+    $('filterFrom').value = '';
+    $('filterTo').value = '';
+    renderPayments();
+});
 
 // Payment modal close
 $('modalCloseBtn').addEventListener('click', () => closeModal(paymentModal));

@@ -111,6 +111,24 @@
                     תשלום חדש
                 </button>
             </div>
+            <div class="date-filter">
+                <div class="date-filter-row">
+                    <div class="date-filter-field">
+                        <label for="filterFrom">מתאריך</label>
+                        <input type="date" id="filterFrom">
+                    </div>
+                    <div class="date-filter-field">
+                        <label for="filterTo">עד תאריך</label>
+                        <input type="date" id="filterTo">
+                    </div>
+                </div>
+                <button class="btn-filter-clear hidden" id="filterClearBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                    נקה סינון
+                </button>
+            </div>
             <div id="paymentsList" class="payments-list">
                 <div class="empty-state">
                     <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
