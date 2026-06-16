@@ -80,7 +80,7 @@ function showScreen(screen) {
         appScreen.classList.add('active');
         currentUserEl.textContent = currentUser.name;
         addPaymentBtn.style.display = isAdmin() ? 'inline-flex' : 'none';
-        editLoanBtn.style.display = isAdmin() ? 'block' : 'none';
+        editLoanBtn.style.display = isAdmin() ? 'inline-block' : 'none';
         loadData();
     }
 }
@@ -421,9 +421,9 @@ paymentForm.addEventListener('submit', async e => {
     }
 });
 
-// Loan modal
+// Loan modal - add amount
 editLoanBtn.addEventListener('click', () => {
-    $('loanAmount').value = loanAmount;
+    $('addLoanAmount').value = '';
     openModal(loanModal);
 });
 
@@ -433,11 +433,14 @@ loanModal.querySelector('.modal-backdrop').addEventListener('click', () => close
 
 loanForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const amount = parseFloat($('loanAmount').value);
+    const amount = parseFloat($('addLoanAmount').value);
     if (amount > 0) {
-        await updateLoanAmount(amount);
+        const newTotal = loanAmount + amount;
+        await updateLoanAmount(newTotal);
+        loanAmount = newTotal;
+        updateStats();
         closeModal(loanModal);
-        showToast('סכום ההלוואה עודכן');
+        showToast('₪' + amount.toLocaleString('he-IL') + ' נוספו להלוואה');
     }
 });
 
