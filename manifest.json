@@ -2,7 +2,7 @@
     "name": "מעקב הלוואה",
     "short_name": "הלוואה",
     "description": "מערכת מעקב החזרי הלוואה",
-    "start_url": "/",
+    "start_url": ".",
     "display": "standalone",
     "background_color": "#0a0f1c",
     "theme_color": "#0a0f1c",
